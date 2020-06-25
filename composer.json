@@ -1,0 +1,21 @@
+{
+    "name": "underwear/laravel-vue-good-table",
+    "description": "Vue-good-table wrapper for Laravel. Server side tables without pain.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Igor Filippov",
+            "email": "thisfil@ya.ru"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "laravel/framework": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelVueGoodTable\\": "src/"
+        }
+    }
+}
