@@ -15,7 +15,8 @@
        + [Boolean Column](#boolean-column)
        + [Date Column](#date-column)
        + [Computed Column](#computed-column)
-2. [Customization](#customization)
+2. [Database Query](#database-query)
+3. [Customization](#customization)
 
 ## Columns
 
@@ -39,7 +40,7 @@ use LaravelVueGoodTable\Columns\Text;
  *
  * @return array
  */
-public function getColumns: array
+protected function getColumns: array
 {
     return [
          Number::make('ID')
@@ -151,9 +152,114 @@ ComputedColumn::make('Random value', 'random', function ($resource) {
 ```
 *Notice: You can't make computed column searchable or sortable.*
 
+
+## Database Query
+When you use `InteractsWithVueGoodTable` trait in your controller, it also requires implementation of `getQuery` method.
+
+You can use Eloquent query builder or just common database query builder
+
+```php
+use Illuminate\Http\Request;
+use App\User;
+
+/**
+ * Get the query builder
+ *
+ * @return array
+ */
+protected function getQuery(Request $request)
+{
+    return User::query();
+}
+```
+
+You can customize query builder depends on request:
+```php
+protected function getQuery(Request $request)
+{
+    return User::query()
+      ->where('company_id', $request->route()->parameter('company_id');)
+}
+```
+
+Use `join` and `select` methods:
+```php
+protected function getQuery(Request $request)
+{
+    return User::query()
+        ->select([
+            'users.*',
+            'hobbies.name as hobby_name',
+            'roles.name as role_name'
+        ])
+        ->join('roles', 'roles.id', '=', 'users.role_id')
+        ->join('hobbies', 'hobbies.id', '=', 'users.hobby_id');
+}
+```
+
+Checkout [Laravel docs about Query Builder](https://laravel.com/docs/master/queries)
+
+### Using query builders with databases, which don't support column aliases in where clause
+PostgreSQL and some others strict sql standart databases don't support using. For this case you can use method `whereClauseAttribute` on columns:
+```php
+
+namespace App\Http\Controllers;
+
+use App\User;
+use Illuminate\Http\Request;
+use LaravelVueGoodTable\Columns\Text;
+use LaravelVueGoodTable\InteractsWithVueGoodTable;
+
+class UserController extends Controller
+{
+    use InteractsWithVueGoodTable;
+
+    /**
+     * Get the query builder
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    protected function getQuery(Request $request)
+    {
+        return User::query()
+            ->select([
+                'users.*',
+                'hobbies.name as hobby_name',
+                'roles.name as role_name'
+            ])
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->join('hobbies', 'hobbies.id', '=', 'users.hobby_id');
+    }
+
+    /**
+     * Get the columns displayed in the table
+     *
+     * @return array
+     */
+    protected function getColumns(): array
+    {
+        return [
+            Text::make('Name', 'name')
+                ->whereClauseAttribute('users.name'),
+
+            Text::make('Role', 'role_name')
+                ->whereClauseAttribute('roles.name'),
+
+            Text::make('Hobby', 'hobby_name')
+                ->whereClauseAttribute('hobbies.name'),
+        ];
+    }
+}
+```
+
+
 ## Customization
 - [Search](https://xaksis.github.io/vue-good-table/guide/configuration/search-options.html)
 - [Pagination](https://xaksis.github.io/vue-good-table/guide/configuration/pagination-options.html)
 
 Bind params for each instance of component or edit `resources/js/components/LaravelVueGoodTable.vue` to change global appearance and behavior in your project.
+
+Check out [vue-good-table docs about advanced customizations](https://xaksis.github.io/vue-good-table/guide/advanced/#custom-row-template)
 
