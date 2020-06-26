@@ -83,41 +83,7 @@ Route::get('/lvgt/data', 'TestController@handleDataRequest');
 
 ## Installation
 
-1. Install the package with composer:
-```bash
-composer require underwear/laravel-vue-good-table
-```
-
-2. Install [vue-good-table](https://xaksis.github.io/vue-good-table/) with npm:
-```bash
-npm i
-npm install --save vue-good-table
-```
-
-3. Copy laravel-vue-good-table Vue component to your vue components folder
-```bash
-cp vendor/underwear/laravel-vue-good-table/js/LaravelVueGoodTable.vue resources/js/components/LaravelVueGoodTable.vue 
-```
-
-4. Register vue-good-table plugin and laravel-vue-good-table component in your `resources/app.js` file:
-```javascript
-window.Vue = require('vue');
-
-// vue-good-table component
-import VueGoodTablePlugin from 'vue-good-table';
-import 'vue-good-table/dist/vue-good-table.css'
-Vue.use(VueGoodTablePlugin);
-
-// laravel-vue-good-table component
-import LaravelVueGoodTable from './components/LaravelVueGoodTable';
-Vue.component('laravel-vue-good-table', LaravelVueGoodTable);
-
-const app = new Vue({
-    el: '#app',
-});
-```
-
-and don't forget to rebuild and include your assets :)
+See [Installation guide](./DOCUMENTATION.md#installation)
 
 ## Documentation
 See [DOCUMENTATION.md](./DOCUMENTATION.md)
