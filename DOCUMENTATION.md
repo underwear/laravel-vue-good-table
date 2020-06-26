@@ -14,6 +14,7 @@
        + [Percantage Column](#percentage-column)
        + [Boolean Column](#boolean-column)
        + [Date Column](#date-column)
+       + [Computed Column](#computed-column)
 
 ## Columns
 
@@ -132,8 +133,19 @@ Boolean - right aligned
 Date - expects a string representation of date eg '20170530'. You should also specify `dateInputFormat` and `dateOutputFormat`.
 
 ```php
+use LaravelVueGoodTable\Columns\Date;
+
 Date::make('Created At', 'created_at')
-    ->dateOutputFormat('dd.MM.yyyy HH:mm:ss'),
+    ->dateOutputFormat('dd.MM.yyyy HH:mm:ss')
 ```
 
 Vue-good-table uses date-fns for date parsing. [Check out their formats here](https://date-fns.org/v2.0.0-beta.4/docs/parse)
+
+#### Computed Column
+If you need some extra field to put there you own value, no problem, use `ComputedField`:
+```php
+ComputedColumn::make('Random value', 'random', function ($resource) {
+    return random(0, 100);
+})
+```
+*Notice: You can't make computed column searchable or sortable.*
