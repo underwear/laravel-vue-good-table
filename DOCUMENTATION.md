@@ -1,6 +1,14 @@
 # Documentation
 
-## Defining Columns
+1. Columns
+   * [Defining Columns](#defining-columns)
+       + [Column Conventions](#column-conventions)
+   * [Sortable Columns](#sortable-columns)
+   * [Searchable Columns](#searchable-columns)
+
+## Columns
+
+### Defining Columns
 
 When you use `InteractsWithVueGoodTable` trait in your controller, it requires implementation of `getColumns` method.
 Vue good table supports columns: number, decimal, percentage, boolean, date.
@@ -31,7 +39,7 @@ public function getColumns: array
 }
 ```
 
-## Column Conventions
+#### Column Conventions
 As noted above, Lvgt will "snake case" the displayable name of the column to determine the underlying database column.
 However, if necessary, you may pass the column name as the second argument to the field's make method:
 
@@ -39,3 +47,14 @@ However, if necessary, you may pass the column name as the second argument to th
 Text::make('Name', 'name_column')
 ```
 
+### Sortable Columns
+When attaching a column to a table, you may use the sortable method to indicate that the table may be sorted by the given column:
+```php
+Text::make('Name', 'name_column')->sortable()
+```
+
+### Searchable Columns
+When attaching a column to a table, you may use the searchable method to indicate that the table may be filtered by search query entering by the given column:
+```php
+Text::make('E-mail', 'email')->searchable()
+```
