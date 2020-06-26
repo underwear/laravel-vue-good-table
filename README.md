@@ -83,7 +83,7 @@ Route::get('/lvgt/data', 'TestController@handleDataRequest');
 
 ## Installation
 
-See [Installation Guide](./DOCUMENTATION.md#installation).
+See [Installation Guide in DOCUMENTATION.md](./DOCUMENTATION.md#installation)
 
 ## Documentation
 See [DOCUMENTATION.md](./DOCUMENTATION.md)
