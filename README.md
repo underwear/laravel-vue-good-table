@@ -88,5 +88,11 @@ See [installation guide](./DOCUMENTATION.md#installation).
 ## Documentation
 See [DOCUMENTATION.md](./DOCUMENTATION.md)
 
-## Known issues:
-- For using multiselect you need install and globally register [vue-select](https://vue-select.org/), cause vue-good-table [issue #714](https://github.com/xaksis/vue-good-table/issues/714)
+## Contributing
+Contributions are welcome!
+
+## Credits
+* [Igor Filippov](https://github.com/underwear/)
+
+## License
+The MIT License (MIT). Please see [License File](./LICENSE) for more information.
