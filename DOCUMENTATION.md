@@ -1,6 +1,9 @@
 # Documentation
 
-1. Columns
+1. Getting started
+   * [Installation](#installation)
+   * [Basic usage](#basic-usage)
+2. Columns
    * [Defining Columns](#defining-columns)
        + [Column Conventions](#column-conventions)
    * [Sortable Columns](#sortable-columns)
@@ -15,9 +18,115 @@
        + [Boolean Column](#boolean-column)
        + [Date Column](#date-column)
        + [Computed Column](#computed-column)
-2. [Database Query](#database-query)
-3. [Customization](#customization)
+3. [Database Query](#database-query)
+4. [Customization](#customization)
+5. [Usage Example](#usage-example)
 
+## Getting started
+
+### Installation
+
+1. Install the package with composer:
+```bash
+composer require underwear/laravel-vue-good-table
+```
+
+2. Install [vue-good-table](https://xaksis.github.io/vue-good-table/) with npm:
+```bash
+npm i
+npm install --save vue-good-table
+```
+
+3. Copy laravel-vue-good-table Vue component to your vue components folder
+```bash
+cp vendor/underwear/laravel-vue-good-table/js/LaravelVueGoodTable.vue resources/js/components/LaravelVueGoodTable.vue 
+```
+
+4. Register vue-good-table plugin and laravel-vue-good-table component in your `resources/app.js` file:
+```javascript
+window.Vue = require('vue');
+
+// vue-good-table component
+import VueGoodTablePlugin from 'vue-good-table';
+import 'vue-good-table/dist/vue-good-table.css'
+Vue.use(VueGoodTablePlugin);
+
+// laravel-vue-good-table component
+import LaravelVueGoodTable from './components/LaravelVueGoodTable';
+Vue.component('laravel-vue-good-table', LaravelVueGoodTable);
+
+const app = new Vue({
+    el: '#app',
+});
+```
+
+and don't forget to rebuild and include your assets :)
+
+### Basic usage
+1. Use `InteractsWithVueGoodTable` trait in your controller and implement two methods: `getColumns()` and `getQuery()`.
+2. Register two new routes.
+3. Use Vue component `laravel-vue-good-table` wherever you want.
+
+#### Controller:
+```php
+
+namespace App\Http\Controllers;
+
+use LaravelVueGoodTable\InteractsWithVueGoodTable;
+use LaravelVueGoodTable\Columns\Column;
+use LaravelVueGoodTable\Columns\Number;
+use Illuminate\Http\Request;
+use App\User;
+
+class ExampleController extends Controller
+{
+    use InteractsWithVueGoodTable;
+
+    /**
+     * Get the query builder
+     * 
+     * @param Request $request
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    protected function getQuery(Request $request)
+    {
+        return User::query();
+    }
+
+    /**
+     * Get the columns displayed in the table
+     *
+     * @return array
+     */
+    protected function getColumns(): array
+    {
+        return [
+            Number::make('ID')
+                ->sortable(),
+                
+            Text::make('Name')
+                ->searchable(),
+                
+            Text::make('E-mail', 'email')
+                ->searchable()
+        ];
+    }
+}
+```
+
+#### Routes:
+```php
+Route::get('/lvgt/config', 'ExampleController@handleConfigRequest');
+Route::get('/lvgt/data', 'ExampleController@handleDataRequest');
+```
+
+#### Blade/HTML:
+```blade
+<div id="vue">
+    <laravel-vue-good-table data-url="/lvgt/data" config-url="/lvgt/config"/>
+</div>
+```
 ## Columns
 
 ### Defining Columns
@@ -264,3 +373,118 @@ Bind params for each instance of component or edit `resources/js/components/Lara
 
 Check out [vue-good-table docs about advanced customizations](https://xaksis.github.io/vue-good-table/guide/advanced/#custom-row-template)
 
+## Usage Example
+
+Controller `app/Http/Controllers/UserController.php`:
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Hobby;
+use App\Role;
+use App\User;
+use Illuminate\Http\Request;
+use LaravelVueGoodTable\Columns\Number;
+use LaravelVueGoodTable\Columns\Text;
+use LaravelVueGoodTable\InteractsWithVueGoodTable;
+
+class UserController extends Controller
+{
+    use InteractsWithVueGoodTable;
+
+    protected function getQuery(Request $request)
+    {
+        return User::query()
+            ->select([
+                'users.*',
+                'hobbies.name as hobby_name',
+                'roles.name as role_name'
+            ])
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->join('hobbies', 'hobbies.id', '=', 'users.hobby_id');
+    }
+
+    protected function getColumns(): array
+    {
+        return [
+            Number::make('ID')
+                ->sortable(),
+
+            Text::make('Name')
+                ->whereClauseAttribute('users.name')
+                ->sortable()
+                ->searchable(),
+
+            Text::make('E-mail', 'email')
+                ->searchable(),
+
+            Text::make('Role', 'role_name')
+                ->whereClauseAttribute('roles.name')
+                ->filterable(true, 'Choose role', Role::all()->pluck('name')->all()),
+
+            Text::make('Hobby', 'hobby_name')
+                ->whereClauseAttribute('hobbies.name')
+                ->filterable(true, 'Choose hobbies', Hobby::all()->pluck('name')->all(), true)
+                ->width('300px')
+        ];
+    }
+
+}
+```
+
+Routes in `routes/web.php`:
+```php
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/users/lvgt/config', 'UserController@handleConfigRequest');
+Route::get('/users/lvgt/data', 'UserController@handleDataRequest');
+```
+
+View `resources/views/welcome.blade.php`:
+```blade
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Welcome</title>
+    </head>
+    <body>
+      <div id="app">
+          <laravel-vue-good-table data-url="/users/lvgt/data" config-url="/users/lvgt/config"/>
+      </div>
+
+      <script src="{{ mix('js/app.js') }}"></script>
+      <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+    </body>
+</html>
+```
+
+`resources/js/app.js`:
+```javascript
+window.Vue = require('vue');
+
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+// vue-good-table component
+import VueGoodTablePlugin from 'vue-good-table';
+import 'vue-good-table/dist/vue-good-table.css'
+Vue.use(VueGoodTablePlugin);
+
+// laravel-vue-good-table component
+import LaravelVueGoodTable from './components/LaravelVueGoodTable';
+Vue.component('laravel-vue-good-table', LaravelVueGoodTable);
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+const app = new Vue({
+    el: '#app',
+});
+```
