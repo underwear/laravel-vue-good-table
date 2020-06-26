@@ -15,6 +15,7 @@
        + [Boolean Column](#boolean-column)
        + [Date Column](#date-column)
        + [Computed Column](#computed-column)
+2. [Customization](#customization)
 
 ## Columns
 
@@ -149,3 +150,10 @@ ComputedColumn::make('Random value', 'random', function ($resource) {
 })
 ```
 *Notice: You can't make computed column searchable or sortable.*
+
+## Customization
+- [Search](https://xaksis.github.io/vue-good-table/guide/configuration/search-options.html)
+- [Pagination](https://xaksis.github.io/vue-good-table/guide/configuration/pagination-options.html)
+
+Bind params for each instance of component or edit `resources/js/components/LaravelVueGoodTable.vue` to change global appearance and behavior in your project.
+
