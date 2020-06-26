@@ -1,9 +1,9 @@
 # laravel-vue-good-table
 Customizable table tool for Laravel, uses powerful [vue-good-table](https://xaksis.github.io/vue-good-table/). Server side tables without pain.
 
-Supports pagination, filtering, searching, sorting. 
+Supports pagination, filtering, searching, sorting. Inspired by Laravel Nova :)
 
-![til](https://s7.gifyu.com/images/demoe38788c724eef24c.gif)
+![til](https://s7.gifyu.com/images/lvgt-demo.gif)
 
 ## Reqs
 - Laravel 5.6+
@@ -110,6 +110,9 @@ and don't forget to rebuild and include your assets :)
 - [Pagination](https://xaksis.github.io/vue-good-table/guide/configuration/pagination-options.html)
 
 Bind params for each instance of component or edit `resources/js/components/LaravelVueGoodTable.vue` to change global appearance and behavior in your project.
+
+## Documentation
+See [DOCUMENTATION.md](./DOCUMENTATION.md)
 
 ## Known issues:
 - For using multiselect you need install and globally register [vue-select](https://vue-select.org/), cause vue-good-table [issue #714](https://github.com/xaksis/vue-good-table/issues/714)
