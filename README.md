@@ -96,7 +96,7 @@ npm install --save vue-good-table
 
 3. Copy laravel-vue-good-table Vue component to your vue components folder
 ```bash
-cp vendor/underwear/laravel-vue-good-table/js/LaravelVueGoodTable.js resources/js/components/LaravelVueGoodTable.vue 
+cp vendor/underwear/laravel-vue-good-table/js/LaravelVueGoodTable.vue resources/js/components/LaravelVueGoodTable.vue 
 ```
 
 4. Register vue-good-table plugin and laravel-vue-good-table component in your `resources/app.js` file:
