@@ -134,7 +134,7 @@ Route::get('/lvgt/data', 'ExampleController@handleDataRequest');
 When you use `InteractsWithVueGoodTable` trait in your controller, it requires implementation of `getColumns` method.
 Vue good table supports columns: number, decimal, percentage, boolean, date.
 
-To add a columns, we can simply add it to the controllers's `getColumns` method.
+To add columns, we can simply add it to the controllers's `getColumns` method.
 Typically, columns may be created using their static make method.
 This method accepts several arguments; however, you usually only need to pass the "human readable" name of the field.
 Lvgt will automatically "snake case" this string to determine the underlying database column:
@@ -162,7 +162,7 @@ protected function getColumns: array
 
 #### Column Conventions
 As noted above, Lvgt will "snake case" the displayable name of the column to determine the underlying database column.
-However, if necessary, you may pass the column name as the second argument to the field's make method:
+However, if necessary, you may pass the column name as the second argument to the column's make method:
 
 ```php
 Text::make('Name', 'name_column')
