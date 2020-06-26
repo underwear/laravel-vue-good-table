@@ -1,7 +1,7 @@
 # laravel-vue-good-table
 Customizable table tool for Laravel, uses powerful [vue-good-table](https://xaksis.github.io/vue-good-table/). Server side tables without pain.
 
-Supports pagination, filtering, searching, sorting.
+Supports pagination, filtering, searching, sorting. 
 
 ![til](https://s7.gifyu.com/images/demoe38788c724eef24c.gif)
 
@@ -71,7 +71,7 @@ Route::get('/lvgt/data', 'TestController@handleDataRequest');
 
 1. Install the package with composer:
 ```bash
-composer composer require underwear/laravel-vue-good-table
+composer require underwear/laravel-vue-good-table
 ```
 
 2. Install [vue-good-table](https://xaksis.github.io/vue-good-table/) with npm:
