@@ -200,7 +200,8 @@ protected function getQuery(Request $request)
 Checkout [Laravel docs about Query Builder](https://laravel.com/docs/master/queries)
 
 ### Using query builders with databases, which don't support column aliases in where clause
-PostgreSQL and some others strict sql standart databases don't support using. For this case you can use method `whereClauseAttribute` on columns:
+PostgreSQL and some others strict sql standart databases don't support using column aliases in where clause.
+For this case you can use method `whereClauseAttribute` on columns:
 ```php
 
 namespace App\Http\Controllers;
