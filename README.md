@@ -20,19 +20,33 @@ Supports pagination, filtering, searching, sorting. Inspired by Laravel Nova :)
 
 namespace App\Http\Controllers;
 
-use App\User;
+use LaravelVueGoodTable\InteractsWithVueGoodTable;
 use LaravelVueGoodTable\Columns\Column;
 use LaravelVueGoodTable\Columns\Date;
+use Illuminate\Http\Request;
+use App\User;
 
 class TestController extends Controller
 {
     use InteractsWithVueGoodTable;
 
+    /**
+     * Get the query builder
+     * 
+     * @param Request $request
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
     protected function getQuery(Request $request)
     {
         return User::query();
     }
 
+    /**
+     * Get the columns displayed in the table
+     *
+     * @return array
+     */
     protected function getColumns(): array
     {
         return [
