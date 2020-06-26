@@ -105,12 +105,6 @@ const app = new Vue({
 
 and don't forget to rebuild and include your assets :)
 
-## Customization
-- [Search](https://xaksis.github.io/vue-good-table/guide/configuration/search-options.html)
-- [Pagination](https://xaksis.github.io/vue-good-table/guide/configuration/pagination-options.html)
-
-Bind params for each instance of component or edit `resources/js/components/LaravelVueGoodTable.vue` to change global appearance and behavior in your project.
-
 ## Documentation
 See [DOCUMENTATION.md](./DOCUMENTATION.md)
 
