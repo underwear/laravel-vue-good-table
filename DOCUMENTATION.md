@@ -1,9 +1,9 @@
 # Documentation
 
-1. Getting started
+1. [Getting started](#getting-started)
    * [Installation](#installation)
    * [Basic usage](#basic-usage)
-2. Columns
+2. [Columns](#columns)
    * [Defining Columns](#defining-columns)
        + [Column Conventions](#column-conventions)
    * [Sortable Columns](#sortable-columns)
