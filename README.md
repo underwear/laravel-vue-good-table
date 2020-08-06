@@ -82,8 +82,10 @@ Route::get('/lvgt/data', 'TestController@handleDataRequest');
 ```
 
 ## Installation
-
-See [Installation Guide in DOCUMENTATION.md](./DOCUMENTATION.md#installation)
+```
+composer require underwear/laravel-vue-good-table
+```
+See the full [Installation Guide in DOCUMENTATION.md](./DOCUMENTATION.md#installation)
 
 ## Documentation
 See [DOCUMENTATION.md](./DOCUMENTATION.md)
