@@ -190,7 +190,9 @@ class Text extends Column implements Searchable, Sortable, Filterable
      */
     public function search($queryBuilder, string $searchQuery)
     {
-        return $queryBuilder->orWhere($this->getWhereClauseAttribute(), 'ilike', "%{$searchQuery}%");
+        $comparison = $this->connectionType == 'mysql' ? 'like' : 'ilike';
+
+        return $queryBuilder->orWhere($this->getWhereClauseAttribute(), $comparison, "%{$searchQuery}%");
     }
 
     /**
