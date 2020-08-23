@@ -41,6 +41,11 @@ abstract class Column implements JsonSerializable
     protected $type = 'text';
 
     /**
+     * @var string
+     */
+    protected $connectionType = 'postgres';
+
+    /**
      * Create a new field.
      *
      * @param  string        $name
@@ -54,6 +59,7 @@ abstract class Column implements JsonSerializable
         $this->name = $name;
         $this->attribute = $attribute ?? str_replace(' ', '_', Str::lower($name));
         $this->resolveCallback = $resolveCallback;
+        $this->connectionType = \DB::connection()->getDriverName();
     }
 
     /**
