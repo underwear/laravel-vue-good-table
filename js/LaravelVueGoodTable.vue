@@ -163,6 +163,8 @@
             },
 
             onSearch(params) {
+
+                this.serverParams.page = 1;
                 this.updateParams({
                     q: params.searchTerm
                 });
