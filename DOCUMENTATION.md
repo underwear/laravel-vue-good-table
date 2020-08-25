@@ -287,7 +287,7 @@ You can customize query builder depends on request:
 protected function getQuery(Request $request)
 {
     return User::query()
-      ->where('company_id', $request->route()->parameter('company_id');)
+      ->where('company_id', $request->route()->parameter('company_id'));
 }
 ```
 
