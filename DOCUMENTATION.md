@@ -195,7 +195,7 @@ Text::make('Status')->filterable(true, 'Choose status', ['offline', 'online'])
 
 Multiselect:
 ```php
-Text::make('Hobby')->filterable(true, 'Choose hobbies', ['Sport', 'Dancing', 'PC-Gaming', 'Cooking'])
+Text::make('Hobby')->filterable(true, 'Choose hobbies', ['Sport', 'Dancing', 'PC-Gaming', 'Cooking'], true)
 ```
 
 ### Column Types
