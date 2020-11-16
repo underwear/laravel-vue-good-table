@@ -39,6 +39,16 @@ abstract class Column implements JsonSerializable
      * @var string|null
      */
     protected $type = 'text';
+    
+    /**
+     * @var bool
+     */
+    protected $html = false;
+
+    /**
+     * @var string|null
+     */
+    protected $width = null;
 
     /**
      * @var string
@@ -147,6 +157,31 @@ abstract class Column implements JsonSerializable
         return $value;
     }
 
+    
+     /**
+     * @param bool|null $value
+     *
+     * @return Text
+     */
+    public function html(?bool $value = true): self
+    {
+        $this->html = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string|null $value
+     *
+     * @return Text
+     */
+    public function width(?string $value): self
+    {
+        $this->width = $value;
+
+        return $this;
+    }
+    
     /**
      * Resolve the given attribute from the given resource.
      *
@@ -168,7 +203,9 @@ abstract class Column implements JsonSerializable
         return [
             'label' => $this->getName(),
             'field' => $this->getAttribute(),
-            'type' => $this->getType()
+            'type' => $this->getType(),
+            'html' => $this->html,
+            'width' => $this->width,
         ];
     }
 }

@@ -33,16 +33,6 @@ class Text extends Column implements Searchable, Sortable, Filterable
     protected $type = 'text';
 
     /**
-     * @var bool
-     */
-    protected $html = false;
-
-    /**
-     * @var string|null
-     */
-    protected $width = null;
-
-    /**
      * @var null|string
      */
     protected $whereClauseAttribute;
@@ -159,30 +149,6 @@ class Text extends Column implements Searchable, Sortable, Filterable
     }
 
     /**
-     * @param bool|null $value
-     *
-     * @return Text
-     */
-    public function html(?bool $value = true): self
-    {
-        $this->html = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param string|null $value
-     *
-     * @return Text
-     */
-    public function width(?string $value): self
-    {
-        $this->width = $value;
-
-        return $this;
-    }
-
-    /**
      * @param Builder $queryBuilder
      * @param string  $searchQuery
      *
@@ -213,9 +179,7 @@ class Text extends Column implements Searchable, Sortable, Filterable
     {
         return array_merge(parent::jsonSerialize(), [
             'sortable' => $this->isSortable(),
-            'html' => $this->html,
             'filterOptions' => $this->filterOptions ? $this->filterOptions->jsonSerialize() : null,
-            'width' => $this->width
         ]);
     }
 }
