@@ -6,7 +6,7 @@ Supports pagination, filtering, searching, sorting. Inspired by Laravel Nova :)
 ![til](https://s7.gifyu.com/images/lvgt-demo.gif)
 
 ## Reqs
-- Laravel 5.6+
+- Laravel 5.6+ or Laravel 6, Laravel 7, Laravel 8
 - Using Vue.js in your project
 
 ## Usage example
