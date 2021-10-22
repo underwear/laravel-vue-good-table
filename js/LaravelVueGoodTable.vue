@@ -83,6 +83,7 @@
                     return {
                         enabled: true,
                         initialSortBy: {},
+                        multipleColumns: true
                     };
                 },
             },
@@ -149,10 +150,7 @@
 
             onSortChange(params) {
                 this.updateParams({
-                    sort: {
-                        type: params[0].type,
-                        field: params[0].field,
-                    },
+                    sort: params,
                 });
                 this.fetchRows();
             },
