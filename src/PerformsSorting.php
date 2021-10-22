@@ -31,7 +31,7 @@ trait PerformsSorting
         }
 
         foreach ($sort as $item) {
-            if (!isset($item['field']) && !isset($item['type'])) {
+            if (!isset($item['field']) || !isset($item['type'])) {
                 continue;
             }
             if (!in_array(strtolower($item['type']), ['asc', 'desc'])) {
