@@ -30,6 +30,9 @@ trait PerformsSorting
 
         foreach ($columns as $column) {
             if ($column->getAttribute() == $sortField and ($column instanceof Sortable) and $column->isSortable()) {
+                if (!in_array(strtolower($sortType), ['asc', 'desc'])) {
+                    continue;
+                }
                 $queryBuilder = $column->sort($queryBuilder, $sortType);
             }
         }
