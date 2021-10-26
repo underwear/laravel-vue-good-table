@@ -30,7 +30,7 @@ class DataRequest extends FormRequest
             'columnFilters' => ['array'],
 
             'sort.*.field' => ['filled',],
-            'sort.*.type' => ['filled', Rule::in(['asc', 'desc'])],
+            'sort.*.type' => ['filled', Rule::in(['asc', 'desc', 'none'])],
 
             'page' => ['integer'],
             'perPage' => ['integer']

@@ -25,12 +25,22 @@ trait PerformsSorting
             return $queryBuilder;
         }
 
-        $sortField = $sort['field'];
-        $sortType = $sort['type'];
+        $column_map = [];
+        foreach ($columns as $index => $column) {
+            $column_map[$column->getAttribute()] = $index;
+        }
 
-        foreach ($columns as $column) {
-            if ($column->getAttribute() == $sortField and ($column instanceof Sortable) and $column->isSortable()) {
-                $queryBuilder = $column->sort($queryBuilder, $sortType);
+        foreach ($sort as $item) {
+            if (!isset($item['field']) || !isset($item['type'])) {
+                continue;
+            }
+            if (!in_array(strtolower($item['type']), ['asc', 'desc'])) {
+                continue;
+            }
+
+            if (isset($column_map[$item['field']]) && isset($columns[$column_map[$item['field']]])) {
+                $column = $columns[$column_map[$item['field']]];
+                $queryBuilder = $column->sort($queryBuilder, $item['type']);
             }
         }
 

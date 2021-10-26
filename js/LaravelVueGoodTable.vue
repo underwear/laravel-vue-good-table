@@ -26,13 +26,50 @@
                 @on-per-page-change="onPerPageChange"
                 @on-search="onSearch"
         >
-            <wrapper>
-                <b-table v-bind="$attrs" v-on="$listeners">
-                    <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
-                        <slot :name="slot" v-bind="scope"/>
-                    </template>
-                </b-table>
-            </wrapper>
+            /
+            <div slot="table-actions" class="custom-table-actions">
+              <slot name="table-action-filters"></slot>
+              <!-- @TODO make a slot for filters be toggled by a button -->
+
+              <div class="btn-group pull-right">
+                <button @click="toggleColumnOptions()" type="button" class="btn btn-default dropdown-toggle"><i class="fa fa-cog"></i>
+                  <span class="caret"></span>
+                </button>
+                <div v-show="showColumnOptions" class="dropdown-menu clearfix" style="padding: 10px 20px 0; width: 300px; left: -250px;display: block;">
+                  <div class="-col-group-container">
+                    <p class="-col-group-title"><strong>Visible Columns</strong></p>
+                    <ul class="-col-group list-unstyled">
+                      <li v-for="(column, index) in columns">
+                        <input type="checkbox"
+                               :id="'-col-' + index"
+                               :name="column.field"
+                               :checked="columns[index].hidden === false || columns[index].hidden*1 === 0"
+                               @change="updateColumnVisibility($event, index)"
+                        >
+                        <label :for="'-col-' + index">{{ columns[index].label }}</label>
+                      </li>
+
+                    </ul>
+                  </div>
+                  <div class="clearfix" style="margin: 10px 0;">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+              <slot :name="slot" v-bind="props" />
+            </template>
+
+      <!--            is this only for VueBootstrap? -->
+      <!--            <wrapper>-->
+      <!--                <b-table v-bind="$attrs" v-on="$listeners">-->
+      <!--                    <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">-->
+      <!--                        <slot :name="slot" v-bind="scope"/>-->
+      <!--                    </template>-->
+      <!--                </b-table>-->
+      <!--            </wrapper>-->
         </vue-good-table>
     </div>
 </template>
@@ -83,8 +120,13 @@
                     return {
                         enabled: true,
                         initialSortBy: {},
+                        multipleColumns: true
                     };
                 },
+            },
+
+            additionalServerParams: {
+              default: {}
             },
 
             // pagination
@@ -92,8 +134,8 @@
                 default() {
                     return {
                         enabled: true,
-                        perPage: 10,
-                        perPageDropdown: null,
+                        perPage: 30,
+                        perPageDropdown: [20,30,50,100,200],
                         position: 'bottom',
                         dropdownAllowAll: false,
                         mode: 'records', // or pages
@@ -124,12 +166,13 @@
                         type: ''
                     },
                     page: 1,
-                    perPage: 10,
+                    perPage: 30,
                     q: ''
                 },
 
                 totalRecords: 0,
                 rows: [],
+                showColumnOptions: false
             };
         },
         methods: {
@@ -149,10 +192,7 @@
 
             onSortChange(params) {
                 this.updateParams({
-                    sort: {
-                        type: params[0].type,
-                        field: params[0].field,
-                    },
+                    sort: params
                 });
                 this.fetchRows();
             },
@@ -174,6 +214,9 @@
             // rows loading
 
             fetchRows() {
+      this.updateParams(this.additionalServerParams);
+      this.$emit('grid-fetch-rows', this.serverParams);
+
                 axios.request({
                     method: 'get',
                     url: this.dataUrl,
@@ -203,6 +246,13 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+
+            toggleColumnOptions() {
+                this.showColumnOptions = !this.showColumnOptions;
+            },
+            updateColumnVisibility($event, index) {
+                this.columns[index].hidden = !this.columns[index].hidden;
             }
         },
         created() {

@@ -39,7 +39,7 @@ abstract class Column implements JsonSerializable
      * @var string|null
      */
     protected $type = 'text';
-    
+
     /**
      * @var bool
      */
@@ -49,6 +49,9 @@ abstract class Column implements JsonSerializable
      * @var string|null
      */
     protected $width = null;
+
+    /** @var bool  */
+    protected $visible = true;
 
     /**
      * @var string
@@ -107,6 +110,22 @@ abstract class Column implements JsonSerializable
     }
 
     /**
+     * @return bool
+     */
+    public function isHidden(): bool
+    {
+        return !$this->isVisible();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
+    {
+        return $this->visible;
+    }
+
+    /**
      * Resolve the field's value.
      *
      * @param  mixed       $row
@@ -157,7 +176,7 @@ abstract class Column implements JsonSerializable
         return $value;
     }
 
-    
+
      /**
      * @param bool|null $value
      *
@@ -181,7 +200,27 @@ abstract class Column implements JsonSerializable
 
         return $this;
     }
-    
+
+    /**
+     * @param bool $visible
+     * @return Column
+     */
+    public function hidden(bool $hidden=true): Column
+    {
+        $this->visible(!$hidden);
+        return $this;
+    }
+
+    /**
+     * @param bool $visible
+     * @return Column
+     */
+    public function visible(bool $visible=true): Column
+    {
+        $this->visible = $visible;
+        return $this;
+    }
+
     /**
      * Resolve the given attribute from the given resource.
      *
@@ -205,6 +244,7 @@ abstract class Column implements JsonSerializable
             'field' => $this->getAttribute(),
             'type' => $this->getType(),
             'html' => $this->html,
+            'hidden' => $this->isHidden(),
             'width' => $this->width,
         ];
     }
