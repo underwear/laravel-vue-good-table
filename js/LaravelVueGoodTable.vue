@@ -126,7 +126,9 @@
             },
 
             additionalServerParams: {
-              default: {}
+                default() {
+                    return {}
+               }
             },
 
             // pagination
