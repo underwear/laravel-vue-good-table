@@ -127,7 +127,7 @@
 
             additionalServerParams: {
                 default() {
-                    return {}
+                    return {};
                }
             },
 
