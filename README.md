@@ -6,7 +6,7 @@ Supports pagination, filtering, searching, sorting. Inspired by Laravel Nova :)
 ![til](https://xaksis.github.io/vue-good-table/hero-image.png)
 
 ## Reqs
-- Laravel 5.6+ or Laravel 6, Laravel 7, Laravel 8
+- Laravel 5.6+ or Laravel 6, Laravel 7, Laravel 8, Laravel 9
 - Using Vue.js in your project
 
 ## Usage example
