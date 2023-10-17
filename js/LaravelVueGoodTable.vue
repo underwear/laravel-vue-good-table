@@ -178,6 +178,13 @@
             };
         },
         methods: {
+		    reloadTable(){
+                this.fetchRows();
+                this.fetchColumns();
+            },
+            refreshRows(){
+                this.fetchRows();
+            },
             updateParams(newProps) {
                 this.serverParams = Object.assign({}, this.serverParams, newProps);
             },
