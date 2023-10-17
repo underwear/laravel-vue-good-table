@@ -178,7 +178,7 @@
             };
         },
         methods: {
-		    reloadTable(){
+            reloadTable(){
                 this.fetchRows();
                 this.fetchColumns();
             },
