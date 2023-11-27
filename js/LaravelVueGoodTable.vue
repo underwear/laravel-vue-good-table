@@ -20,11 +20,11 @@
                 :isLoading.sync="isLoading"
                 :columns="columns"
                 :rows="rows"
-                @on-page-change="onPageChange"
-                @on-sort-change="onSortChange"
-                @on-column-filter="onColumnFilter"
-                @on-per-page-change="onPerPageChange"
-                @on-search="onSearch"
+                v-on:page-change="onPageChange"
+                v-on:sort-change="onSortChange"
+                v-on:column-filter="onColumnFilter"
+                v-on:per-page-change="onPerPageChange"
+                v-on:search="onSearch"
         >
             /
             <div slot="table-actions" class="custom-table-actions">
@@ -178,6 +178,13 @@
             };
         },
         methods: {
+            reloadTable(){
+                this.fetchRows();
+                this.fetchColumns();
+            },
+            refreshRows(){
+                this.fetchRows();
+            },
             updateParams(newProps) {
                 this.serverParams = Object.assign({}, this.serverParams, newProps);
             },
